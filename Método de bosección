@@ -1,0 +1,102 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNT1Fmcns3OQbODKwzTuKfc",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/ArturoMartinez1994/M-todos-num-ricos/blob/main/M%C3%A9todo%20de%20bosecci%C3%B3n\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jgU__8k6QBRz"
+      },
+      "outputs": [],
+      "source": [
+        "import math\n",
+        "import tabulate\n",
+        "\n",
+        "\n",
+        "\n",
+        "bisección = [[ \"n\" , \"An\" , \"Bn\" , \"Pn\" , \"f(Pn)\" , \"Error\"]]"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "def biseccion(f, a, b, tol, N0):\n",
+        "    if f(a) * f(b) >= 0:\n",
+        "       print(\"El método de bisección no es aplicable. f(a) y f(b) deben tener signos opuestos.\")\n",
+        "       return None\n",
+        "    i = 1\n",
+        "    FA = f(a)\n",
+        "\n",
+        "    while i <= N0:\n",
+        "        p = a + (b - a) / 2\n",
+        "        FP = f(p)\n",
+        "\n",
+        "        if FP == 0 or (b - a) / 2 < tol:\n",
+        "            print(f\"Procedimiento completado exitosamente. La solución aproximada es p = {p}\")\n",
+        "            return p\n",
+        "\n",
+        "        i += 1\n",
+        "\n",
+        "        if FA * FP > 0:\n",
+        "            a = p\n",
+        "            FA = FP\n",
+        "        else:\n",
+        "            b = p\n",
+        "\n",
+        "    print(f\"El método fracasó después de {N0} iteraciones.\")\n",
+        "    return None\n",
+        "\n",
+        "#Ejemplo de uso\n",
+        "def funcion(x):\n",
+        "    return x**3 - x**3 + x - 1  # Ejemplo de función f(x)\n",
+        "\n",
+        "solucion = biseccion(funcion, 1, 2, 1e-6, 100)\n",
+        "print(\"Solución encontrada:\", solucion)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "wQgc7oP6tQrK",
+        "outputId": "9449646e-b510-40be-fa6b-b8f2a79b7a3a"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "El método de bisección no es aplicable. f(a) y f(b) deben tener signos opuestos.\n",
+            "Solución encontrada: None\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
