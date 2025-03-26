@@ -1,0 +1,126 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNb3zNiCNddb6Uget5bZFC1",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/ArturoMartinez1994/M-todos-num-ricos/blob/main/M%C3%A9todo%20de%20Newton\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# **Método de Newton**"
+      ],
+      "metadata": {
+        "id": "SfcoaKdmq4ML"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "El método de Newton usa aproximaciones usando tangentes sucesivas intersectando con el eje x las cuales podemos calcular con la siguiente función:"
+      ],
+      "metadata": {
+        "id": "P7lBeb2hrU_k"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "$$f(p) = f(p0)+(p-p0) f'(p0)+ (p-p0)^2/2 \\; f\" (ξ(p))$$"
+      ],
+      "metadata": {
+        "id": "QMqlqUAHt71c"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "2Io_6nbzj8Sm",
+        "outputId": "33d76d97-9b5c-42d9-9685-7780b75097b2"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Solución encontrada: 1.4142135623730951 en 5 iteraciones.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "1.4142135623730951"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 4
+        }
+      ],
+      "source": [
+        "import sympy as sp\n",
+        "import tabulate\n",
+        "\n",
+        "def newton_method(f, x0, tol, N0):\n",
+        "    x = sp.symbols('x')\n",
+        "    f_prime = sp.diff(f, x)  # Derivada de f\n",
+        "    f_lambdified = sp.lambdify(x, f)  # Convierte f en función evaluable\n",
+        "    f_prime_lambdified = sp.lambdify(x, f_prime)  # Convierte f' en función evaluable\n",
+        "    p0 = x0\n",
+        "\n",
+        "    for i in range(1, N0 + 1):\n",
+        "        if f_prime_lambdified(p0) == 0:\n",
+        "           print(\"Derivada cero, el método falla.\")\n",
+        "           return None\n",
+        "\n",
+        "        p = p0 - f_lambdified(p0) / f_prime_lambdified(p0)\n",
+        "        if abs(p - p0) < tol:\n",
+        "           print(f\"Solución encontrada: {p} en {i} iteraciones.\")\n",
+        "           return p\n",
+        "\n",
+        "        p0 = p  # Actualizar p0\n",
+        "\n",
+        "    print(f\"El método falló después de {N0} iteraciones.\")\n",
+        "    return None\n",
+        "\n",
+        "\n",
+        "#Ejemplo de uso\n",
+        "\n",
+        "x = sp.symbols('x')\n",
+        "f = x**2 - 2  # Función f(x) = x^2 - 2\n",
+        "x0 = 1  # Aproximación inicial\n",
+        "tol = 1e-6  # Tolerancia\n",
+        "N0 = 100  # Número máximo de iteraciones\n",
+        "\n",
+        "newton_method(f, x0, tol, N0)\n",
+        "\n",
+        "print(tabulate(data, headers=\"firstrow\", tablefmt=\"fancy_grid\"))"
+      ]
+    }
+  ]
+}
